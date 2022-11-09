@@ -30,11 +30,11 @@ DHT dht(DHTPin, DHTTYPE);   // Initialize DHT sensor.
 // Wifi and MQTT
 #include "arduino_secrets.h" 
 /*
-**** please enter your sensitive data in the Secret tab/arduino_secrets.h
+**** enter the sensitive data in the Secret tab/arduino_secrets.h
 **** using format below
 #define SECRET_SSID "ssid name"
 #define SECRET_PASS "ssid password"
-#define SECRET_MQTTUSER "user name - eg student"
+#define SECRET_MQTTUSER "user name"
 #define SECRET_MQTTPASS "password";
  */
 
@@ -96,7 +96,7 @@ void loop() {
   if (minuteChanged()) {
     readMoisture();
     sendMQTT();
-    Serial.println(GB.dateTime("H:i:s")); // UTC.dateTime("l, d-M-y H:i:s.v T")
+    Serial.println(GB.dateTime("H:i:s"));
   }
   
   client.loop();
@@ -118,7 +118,7 @@ void readMoisture(){
 }
 
 void startWifi() {
-  // We start by connecting to a WiFi network
+  // start by connecting to a WiFi network
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -144,6 +144,14 @@ void syncDate() {
 
 }
 
+void startWebserver() {
+  // when connected and IP address obtained start HTTP server  
+  server.on("/", handle_OnConnect);
+  server.onNotFound(handle_NotFound);
+  server.begin();
+  Serial.println("HTTP server started");  
+}
+
 void sendMQTT() {
 
   if (!client.connected()) {
@@ -155,19 +163,19 @@ void sendMQTT() {
   snprintf (msg, 50, "%.1f", Temperature);
   Serial.print("Publish message for t: ");
   Serial.println(msg);
-  client.publish("student/CASA0014/plant/ucjtdjw/temperature", msg);
+  client.publish("student/CASA0014/plant/zcapiuc/temperature", msg);
 
   Humidity = dht.readHumidity(); // Gets the values of the humidity
   snprintf (msg, 50, "%.0f", Humidity);
   Serial.print("Publish message for h: ");
   Serial.println(msg);
-  client.publish("student/CASA0014/plant/ucjtdjw/humidity", msg);
+  client.publish("student/CASA0014/plant/zcapiuc/humidity", msg);
 
-  //Moisture = analogRead(soilPin);   // moisture read by readMoisture function
+  Moisture = analogRead(soilPin);   // moisture read by readMoisture function
   snprintf (msg, 50, "%.0i", Moisture);
   Serial.print("Publish message for m: ");
   Serial.println(msg);
-  client.publish("student/CASA0014/plant/ucjtdjw/moisture", msg);
+  client.publish("student/CASA0014/plant/zcapiuc/moisture", msg);
 
 }
 
@@ -202,7 +210,7 @@ void reconnect() {
     if (client.connect(clientId.c_str(), mqttuser, mqttpass)) {
       Serial.println("connected");
       // ... and resubscribe
-      client.subscribe("student/CASA0014/plant/ucjtdjw/inTopic");
+      client.subscribe("student/CASA0014/plant/zcapiuc/inTopic");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -211,14 +219,6 @@ void reconnect() {
       delay(5000);
     }
   }
-}
-
-void startWebserver() {
-  // when connected and IP address obtained start HTTP server  
-  server.on("/", handle_OnConnect);
-  server.onNotFound(handle_NotFound);
-  server.begin();
-  Serial.println("HTTP server started");  
 }
 
 void handle_OnConnect() {
