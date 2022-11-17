@@ -11,8 +11,11 @@
 ![image](https://github.com/HanpuLiu12138/Plant-Monitor/blob/main/image/moisture.png)
 ## My measuring data for moisture
 ![image](https://github.com/HanpuLiu12138/Plant-Monitor/blob/main/image/My%20moisture.png)
+
 ## Problem
+### Rusty nails
 ![](https://img95.699pic.com/xsj/04/dg/ti.jpg!/fh/300)
+
 ## Improvements
 ### LDR sensor
 ![](https://www.electronicsforu.com/wp-contents/uploads/2020/09/LDR.jpg)
