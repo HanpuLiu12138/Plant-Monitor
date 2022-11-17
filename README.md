@@ -1,6 +1,8 @@
 # Plant-Monitor
 ## My plant monitor
 ![image](https://github.com/HanpuLiu12138/Plant-Monitor/blob/main/image/My%20plant%20monitor.jpg)
+## Schematics of my plant monitor
+![image](https://github.com/HanpuLiu12138/Plant-Monitor/blob/main/image/Schematics.png)
 ## My measuring data for temperature and humidity
 ![image](https://github.com/HanpuLiu12138/Plant-Monitor/blob/main/image/My%20moisture.png)
 ![image](https://github.com/HanpuLiu12138/Plant-Monitor/blob/main/image/my%20humidiy.png)
